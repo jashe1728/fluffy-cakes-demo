@@ -26,15 +26,22 @@ const copy = {
 const page = document.body.dataset.page || 'home';
 const lang = ['en','pt'].includes(localStorage.getItem(LANGUAGE_KEY)) ? localStorage.getItem(LANGUAGE_KEY) : 'en';
 const t = key => (copy[page]?.[key] || copy.common[key] || [key,key])[lang === 'pt' ? 1 : 0];
-const setText = (selector, value, index = 0) => { const el = document.querySelectorAll(selector)[index]; if (el) el.innerHTML = value; };
-const setPair = (selector, pair, index = 0) => setText(selector, typeof pair === 'string' ? pair : pair[lang === 'pt' ? 1 : 0], index);
+const setText = (selector, value, index = 0, root = document) => {
+  const el = root.querySelectorAll(selector)[index];
+  if (el) el.innerHTML = value;
+};
+const setPair = (selector, pair, index = 0, root = document) =>
+  setText(selector, typeof pair === 'string' ? pair : pair[lang === 'pt' ? 1 : 0], index, root);
 
 function translatePage() {
   document.documentElement.lang = lang;
   document.title = t('title');
   const meta = document.querySelector('meta[name="description"]'); if (meta) meta.content = t('description');
   setPair('.skip', copy.common.skip); document.querySelector('.brand')?.setAttribute('aria-label', t('homeLabel')); document.querySelector('.brand-logo')?.setAttribute('alt', t('logoAlt')); setPair('.menu-toggle .sr-only', copy.common.openNav); setPair('.language-label', copy.common.languageLabel); document.querySelector('.language-switcher')?.setAttribute('aria-label', t('languageLabel'));
-  const navKeys = ['home','menu','story','gallery']; document.querySelectorAll('.nav-links a, body:not([data-page]) nav a').forEach((el,i)=>{ if(navKeys[i]) el.textContent=t(navKeys[i]); });
+  const navKeys = ['home', 'menu', 'story', 'gallery'];
+  document.querySelectorAll('#site-menu > a').forEach((el, i) => {
+    if (navKeys[i]) el.textContent = t(navKeys[i]);
+  });
   document.querySelectorAll('.floating-enquiry').forEach(el=>{el.textContent=t('enquire');el.setAttribute('aria-label',t('enquire'));});
   document.querySelectorAll('footer .footer-row span:first-child').forEach(el=>el.textContent=t('footer'));
   document.querySelectorAll('footer a').forEach((el,i)=>{if(i===0) el.textContent=t('email'); else el.textContent=t('whatsappLink');});
