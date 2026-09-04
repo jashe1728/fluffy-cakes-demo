@@ -33,7 +33,7 @@ function translatePage() {
   document.documentElement.lang = lang;
   document.title = t('title');
   const meta = document.querySelector('meta[name="description"]'); if (meta) meta.content = t('description');
-  setPair('.skip', copy.common.skip); setPair('.brand', copy.common.homeLabel); setPair('.brand-logo', copy.common.logoAlt); setPair('.menu-toggle .sr-only', copy.common.openNav); setPair('.language-label', copy.common.languageLabel); document.querySelector('.language-switcher')?.setAttribute('aria-label', t('languageLabel'));
+  setPair('.skip', copy.common.skip); document.querySelector('.brand')?.setAttribute('aria-label', t('homeLabel')); document.querySelector('.brand-logo')?.setAttribute('alt', t('logoAlt')); setPair('.menu-toggle .sr-only', copy.common.openNav); setPair('.language-label', copy.common.languageLabel); document.querySelector('.language-switcher')?.setAttribute('aria-label', t('languageLabel'));
   const navKeys = ['home','menu','story','gallery']; document.querySelectorAll('.nav-links a, body:not([data-page]) nav a').forEach((el,i)=>{ if(navKeys[i]) el.textContent=t(navKeys[i]); });
   document.querySelectorAll('.floating-enquiry').forEach(el=>{el.textContent=t('enquire');el.setAttribute('aria-label',t('enquire'));});
   document.querySelectorAll('footer .footer-row span:first-child').forEach(el=>el.textContent=t('footer'));
