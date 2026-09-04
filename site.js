@@ -35,7 +35,7 @@ function translatePage() {
   const meta = document.querySelector('meta[name="description"]'); if (meta) meta.content = t('description');
   setPair('.skip', copy.common.skip); setPair('.brand', copy.common.homeLabel); setPair('.brand-logo', copy.common.logoAlt); setPair('.menu-toggle .sr-only', copy.common.openNav); setPair('.language-label', copy.common.languageLabel); document.querySelector('.language-switcher')?.setAttribute('aria-label', t('languageLabel'));
   const navKeys = ['home','menu','story','gallery']; document.querySelectorAll('.nav-links a, body:not([data-page]) nav a').forEach((el,i)=>{ if(navKeys[i]) el.textContent=t(navKeys[i]); });
-  document.querySelectorAll('header > .wrap > .button, header .button').forEach(el=>el.textContent=t('enquire'));
+  document.querySelectorAll('.floating-enquiry').forEach(el=>{el.textContent=t('enquire');el.setAttribute('aria-label',t('enquire'));});
   document.querySelectorAll('footer .footer-row span:first-child').forEach(el=>el.textContent=t('footer'));
   document.querySelectorAll('footer a').forEach((el,i)=>{if(i===0) el.textContent=t('email'); else el.textContent=t('whatsappLink');});
   document.querySelectorAll('.language-switcher button').forEach(button=>{const active=button.dataset.lang===lang;button.setAttribute('aria-pressed',String(active));button.classList.toggle('is-active',active);});
